@@ -3,7 +3,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require("path");
 
 // add paths for subdomains here
-const paths = []
+const paths  = [
+]
 
 let multipleHtmlPlugins = paths.map(name => {
   return new HtmlWebPackPlugin({
@@ -13,6 +14,7 @@ let multipleHtmlPlugins = paths.map(name => {
 });
 
 module.exports = {
+    entry: "./src/index.tsx",
     devServer: {
       contentBase: path.join(__dirname, 'docs'),
       compress: true,
@@ -25,17 +27,24 @@ module.exports = {
             loader: require.resolve("file-loader") + "?name=../[path][name].[ext]"
         },
         {
-          test: /\.(js|jsx)$/,
+          test: /\.(js|tsx)$/,
           exclude: /node_modules/,
-          use: {
-            loader: "babel-loader"
-          }
+          use: "ts-loader"
         },
         {
           test: /\.css$/i,
           use: [MiniCssExtractPlugin.loader, 'css-loader'],
         },
+        {
+          test: /\.(ttf)$/,
+          use: {
+            loader: "url-loader"
+          }
+        }
       ]
+    },
+    resolve: {
+      extensions: ['.tsx', '.ts', '.js']
     },
     plugins: [
         new HtmlWebPackPlugin({

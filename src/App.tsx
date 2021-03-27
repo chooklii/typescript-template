@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from "react-router-dom"
-import {Header} from "./Components"
+import ScrollToTop from "./ScrollToTop"
+import { Home, NotFound } from "./Pages"
 import "../static/style-mobile.css"
 import "../static/style-desktop.css"
 import "../static/style-tablet.css"
@@ -15,16 +16,15 @@ class App extends React.Component {
                 <div>
                     <Switch>
                         <Route exact path="/">
-                            <div>
-                                <Header/>
-                                Home
-                    </div>
+                            <ScrollToTop>
+                                <Home />
+                            </ScrollToTop>
                         </Route>
 
                         <Route path="*">
-                            <div>
-                                404
-                            </div>
+                            <ScrollToTop>
+                                <NotFound />
+                            </ScrollToTop>
                         </Route>
                     </Switch>
                 </div>
