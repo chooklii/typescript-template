@@ -1,4 +1,4 @@
-Typescript Template
+Personal Typescript Template
 
 First time:
 
