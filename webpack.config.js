@@ -2,14 +2,26 @@ const HtmlWebPackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require("path");
 
+const defaultTitle = ""
+const defaultDescription = ""
+
 // add paths for subdomains here
 const paths  = [
+  {
+    name: "",
+    title: "",
+    description: ""
+  },
 ]
 
-let multipleHtmlPlugins = paths.map(name => {
+let multipleHtmlPlugins = paths.map(single => {
   return new HtmlWebPackPlugin({
-    template: "./static/index.html",
-    filename: `../docs/${name}/index.html`,
+    template: "./static/index.ejs",
+    filename: `../docs/${single.name}/index.html`,
+    header: {title: single.title},
+    meta: {
+      description: single.description
+    },
   })
 });
 
@@ -48,12 +60,20 @@ module.exports = {
     },
     plugins: [
         new HtmlWebPackPlugin({
-          template: "./static/index.html",
+          template: "./static/index.ejs",
           filename: "../docs/index.html",
+          meta: {
+            description: defaultDescription
+          },
+          header: {title: defaultTitle},
         }),
         new HtmlWebPackPlugin({
-          template: "./static/index.html",
-          filename: "../docs/404.html"
+          template: "./static/index.ejs",
+          filename: "../docs/404.html",
+          header: {title: defaultTitle},
+          meta: {
+            description: defaultDescription
+          }
         }),
       new MiniCssExtractPlugin({
           filename: "style.css",
